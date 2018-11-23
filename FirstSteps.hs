@@ -53,6 +53,8 @@ map2 f (x:xs) = f x : map2 f xs
 
 areStringEq :: [Char] -> [Char] -> Bool
 areStringEq [] [] = True
+areStringEq (x:xs) [] = False
+areStringEq [] (y:ys) = False
 areStringEq (x:xs) (y:ys) = x == y && areStringEq xs ys
 
 
