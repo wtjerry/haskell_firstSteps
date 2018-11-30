@@ -130,3 +130,9 @@ writeToFile = do
 fib = 1 : 1 : [a + b | (a, b) <- zip fib (tail fib)]
 
 numberOfDecimalsOf1000thFib = floor (logBase 10 (fromIntegral  (fib !! 1000)))
+
+addNum :: Num c => c -> c -> c
+addNum x y = x + y
+
+showDouble :: Double -> String
+showDouble d = show d
