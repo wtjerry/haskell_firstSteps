@@ -30,6 +30,9 @@ areStringEq "hello" ('h':'e':'l':'l':'o':[])
 Haskell is strongly static typed. Compared to python which would be dynamic weak typed.
 see http://learnyouahaskell.com/types-and-typeclasses
 
+functions lower case
+Data constructors upper case
+
 ### static vs dynamic typed:
 
 Once a "variable" is bound to a value, it cannot be bound to a value of a differnt type.
@@ -47,7 +50,6 @@ The following wont work in a strongly typed language:
 a = "10"
 b = a / 2
 ```
-
 
 ## type, type class, data constructor, type constructor
 
@@ -96,9 +98,12 @@ So something cannot be of type Maybe. It can however be of type Maybe String.
 
 ## class type
 
-class: a class defines and implements a set of functions that is will be avaialbe to all types of that class.
+class: a class defines a set of functions that is will be avaialbe to all instances of that class.
+a type can be made an instance of such a class by either using the deriving part when creating the type, or using the instance of construct.
+Classes sometimes provide default implementations for the defined functions. They can be overriden by using the instance of construct.
+
 the Num class defines: (+), (*), abs, signum, fromInteger, (negate | (-))
-therefore whenver a Num is required by a method an Integer (or others) may be used, similar to an interface in Java
+Therefore whenver a Num is required by a method, an Integer (or others) may be used, similar to an interface in Java
 difference to interface:
 ``` haskell
 addNum :: Num c => c -> c -> c
@@ -120,8 +125,6 @@ showDouble (addNum i1 i2)
 
 here i1 and i2 are of type Integer and showDouble only takes a Doulbe. Both Integer and Double would be of class Num. But when calling the function showDouble with the output of addNum while passing 2 Integers we receive an Exception.
 
-functions lower case
-Data constructors upper case
 
 
 ## newtype vs data vs type

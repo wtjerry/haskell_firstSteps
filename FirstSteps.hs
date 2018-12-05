@@ -136,3 +136,10 @@ addNum x y = x + y
 
 showDouble :: Double -> String
 showDouble d = show d
+
+
+-- print all Chars
+printAllChars = putStr . unlines $ [[x] | x <- [(minBound :: Char)..(maxBound :: Char)]]
+
+-- or only a certain amount
+printChars start num = putStr . unlines $ take num $ drop start [[x] | x <- [(minBound :: Char)..(maxBound :: Char)]] 
