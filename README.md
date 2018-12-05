@@ -124,6 +124,26 @@ functions lower case
 Data constructors upper case
 
 
+## newtype vs data vs type
+
+While newtype and data are able to create new types, type only creates a synonym.
+``` haskell
+type String = [Char]
+```
+
+newtype can only take one data constructor with one field.
+``` haskell
+newtype Identity a = Identity a
+```
+but not
+``` haskell
+newtype Pair a b = Pair a b
+```
+
+Internally when a newtype is used GHC doesnt need to use indirection but can treat the Type Identity and the contained value a as the same.
+https://wiki.haskell.org/Newtype
+
+
 ## currying
 
 ``` haskell
