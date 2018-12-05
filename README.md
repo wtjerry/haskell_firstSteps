@@ -215,3 +215,21 @@ describeList xs = "The list is " ++ case xs of [] -> "empty."
                                                xs -> "a longer list."
 ```
 
+
+## performance
+
+As with every language the way you solve a problem affects the performance.
+Even if haskell is a functional language and you dont really tell it how to solve a problem but more what you expect and define some edge cases, you will see differences.
+Let's look at the following example:
+
+ghci> :set +s
+
+ghci> last [x | x <- [1..10000000], mod x 3829 == 0]
+9997519
+(5.49 secs, 2,560,263,768 bytes)
+
+ghci> head (filter (\x -> mod x 3829 == 0) [10000000,9999999..0])
+9997519
+(0.01 secs, 730,160 bytes)
+
+There is a quite big difference in whether we build up a list and take the last or just take the first. Both in execution time 5.5 sec vs basically instantaneous and memory 2.5 GB vs 730 Kb.
