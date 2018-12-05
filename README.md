@@ -181,7 +181,7 @@ https://stackoverflow.com/questions/31652475/defining-a-new-monad-in-haskell-rai
 
 ``` haskell
 length [] = 0
-length [x:xs] = 1 + length xs
+length (x:xs) = 1 + length xs
 ```
 or
 ``` haskell
