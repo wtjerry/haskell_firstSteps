@@ -118,12 +118,14 @@ To proof this:
 showDouble :: Double -> String
 showDouble d = show d
 
-i1 = toInteger 1
-i2 = toInteger 2
+i1 :: Int
+i1 = 1
+i2 :: Int
+i2 = 2
 showDouble (addNum i1 i2)
 ```
 
-here i1 and i2 are of type Integer and showDouble only takes a Doulbe. Both Integer and Double would be of class Num. But when calling the function showDouble with the output of addNum while passing 2 Integers we receive an Exception.
+here i1 and i2 are of type Integer and showDouble only takes a Double. Both Integer and Double would be of class Num. But when calling the function showDouble with the output of addNum while passing 2 Integers we receive an Exception.
 
 
 
