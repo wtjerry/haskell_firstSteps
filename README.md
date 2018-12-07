@@ -96,13 +96,14 @@ But Maybe is not a type but a type constructor.
 So something cannot be of type Maybe. It can however be of type Maybe String.
 
 
-## class type
+## type class
 
-class: a class defines a set of functions that is will be avaialbe to all instances of that class.
+A type class defines a set of functions that is will be avaialbe to all instances of that class.
 a type can be made an instance of such a class by either using the deriving part when creating the type, or using the instance of construct.
 Classes sometimes provide default implementations for the defined functions. They can be overriden by using the instance of construct.
 
-the Num class defines: (+), (*), abs, signum, fromInteger, (negate | (-))
+To see the instances of a type class you may use :info YourTypeClass
+The Num class defines: (+), (*), abs, signum, fromInteger, (negate | (-))
 Therefore whenver a Num is required by a method, an Integer (or others) may be used, similar to an interface in Java
 difference to interface:
 ``` haskell
@@ -258,3 +259,11 @@ ghci> head (filter (\x -> mod x 3829 == 0) [10000000,9999999..0])
 (0.01 secs, 730,160 bytes)
 
 There is a quite big difference in whether we build up a list and take the last or just take the first. Both in execution time 5.5 sec vs basically instantaneous and memory 2.5 GB vs 730 Kb.
+
+
+# syntactic sugar
+
+[a..b] desugars into enumFromTo a b
+
+enumFromTo :: Enum a => a -> a -> [a]
+
