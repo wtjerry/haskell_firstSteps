@@ -19,13 +19,16 @@ to find out about a method / type:
 :t map 
 ```
 
-### usage
+## usage
 once the module is loaded you may call methods like this:
 ``` haskell
 areStringEq "hello" ('h':'e':'l':'l':'o':[])
 ```
 
-## type system
+Examples in this document work best by putting them into a hs file and loading it with ghci.
+They may however also work if 'let' is used to bind functions.
+
+# type system
 
 Haskell is strongly static typed. Compared to python which would be dynamic weak typed.
 see http://learnyouahaskell.com/types-and-typeclasses
@@ -33,7 +36,7 @@ see http://learnyouahaskell.com/types-and-typeclasses
 functions lower case
 Data constructors upper case
 
-### static vs dynamic typed:
+## static vs dynamic typed:
 
 Once a "variable" is bound to a value, it cannot be bound to a value of a differnt type.
 The following wont work in a static typed language:
@@ -42,7 +45,7 @@ x = "hello world"
 x = 5
 ```
 
-### strongly vs weak typed:
+## strongly vs weak typed:
 
 Once a "variable" is bound to a value of Type A it cannot be used as if it were Type B without explicitly converting it.
 The following wont work in a strongly typed language:
@@ -128,6 +131,20 @@ showDouble (addNum i1 i2)
 
 here i1 and i2 are of type Integer and showDouble only takes a Double. Both Integer and Double would be of class Num. But when calling the function showDouble with the output of addNum while passing 2 Integers we receive an Exception.
 
+### custom type class
+
+``` haskell
+data Color = Green | Blue | Red | Yellow deriving (Show)
+
+class Colorable a where
+    colorOf :: a -> Color
+
+instance Colorable Integer where
+    colorOf 42 = Green
+    colorOf 0 = Yellow
+    colorOf i | i < 0 = Red
+        colorOf _ = Blue
+```
 
 
 ## newtype vs data vs type
@@ -150,7 +167,7 @@ Internally when a newtype is used GHC doesnt need to use indirection but can tre
 https://wiki.haskell.org/Newtype
 
 
-## currying
+# currying
 
 ``` haskell
 map (+ 1) [1, 2, 3]
@@ -181,7 +198,7 @@ Prelude> (\x -> \y -> x * y) 2 3
 Prelude> :t (\x -> \y -> x * y) 2
 (\x -> \y -> x * y) 2 :: Num a => a -> a
 
-### Why are function types that strange? Why not just split it into params and result?
+## Why are function types that strange? Why not just split it into params and result?
 In haskell every function is curried.
 (+) :: Num a => a -> a -> a
 the order of evaluating goes as follows:
@@ -197,13 +214,8 @@ Num a => a
 Num a => a
 
 
-## monad
-A monad is a type constructor and a container that supports basic functions to **wrap and unwrap functions as values**.
 
-https://stackoverflow.com/questions/31652475/defining-a-new-monad-in-haskell-raises-no-instance-for-applicative
-
-
-## pattern matching & guards
+# pattern matching & guards
 
 ``` haskell
 length [] = 0
@@ -242,7 +254,7 @@ describeList xs = "The list is " ++ case xs of [] -> "empty."
 ```
 
 
-## performance
+# performance
 
 As with every language the way you solve a problem affects the performance.
 Even if haskell is a functional language and you dont really tell it how to solve a problem but more what you expect and define some edge cases, you will see differences.
@@ -266,4 +278,29 @@ There is a quite big difference in whether we build up a list and take the last 
 [a..b] desugars into enumFromTo a b
 
 enumFromTo :: Enum a => a -> a -> [a]
+
+
+# monad
+A monad is a type constructor and a container that supports basic functions to **wrap and unwrap functions as values**.
+
+https://stackoverflow.com/questions/31652475/defining-a-new-monad-in-haskell-raises-no-instance-for-applicative
+
+
+# functors
+
+A functor is just another type class like Num or our example Colorable.
+It defines a function fmap:
+fmap :: (a -> b) -> f a -> f b
+That means each type that is an instance of Functor can be mapped over with a function.
+[] is such a type ([] is actually just a type constructor but lets let that slide for now). Actually fmap for [] is just map.
+
+Maybe is another instance of Functor:
+``` haskell
+instance Functor Maybe where
+    fmap f (Just x) = Just (f x)
+    fmap f Nothing = Nothing
+```
+When applying a function f to Nothing the result will be Nothing.
+When applying a function f to a (Just x) it will unpack the (Just x) and apply the function to x and repack it again.
+
 
