@@ -217,18 +217,20 @@ Num a => a
 
 # pattern matching & guards
 
+pattern matching on function level:
 ``` haskell
 length [] = 0
 length (x:xs) = 1 + length xs
 ```
-or
+or:
 ``` haskell
 data Gender = Female | Male
 data Human = Human Float Gender -- Float is the age
 isRetired (Human age Female) = age >= 64
 isRetired (Human age Male) = age >= 65
 ```
-is the same as
+
+pattern matching with case expression:
 ``` haskell
 data Gender = Female | Male
 data Human = Human Float Gender -- Float is the age
@@ -236,8 +238,7 @@ isRetired h = case h of (Human age Female) -> age >= 64
                         (Human age Male) -> age >= 65
 ```
 
-vs.
-
+guards on function level:
 ``` haskell
 bmiTell bmi
     | bmi <= 18.5 = "You're underweight, you emo, you!"
@@ -245,12 +246,15 @@ bmiTell bmi
     | bmi <= 30.0 = "You're fat! Lose some weight, fatty!"
     | otherwise   = "You're a whale, congratulations!"
 ```
-or
+
+guards with case expression:
 ``` haskell
-describeList :: [a] -> String
-describeList xs = "The list is " ++ case xs of [] -> "empty."
-                                               [x] -> "a singleton list." 
-                                               xs -> "a longer list."
+describeMaybeInt :: Maybe Int -> String
+describeMaybeInt m = "The int " ++ case m of
+    Just i | i > 0 -> "is positive."
+           | i == 0 -> "is zero."
+           | otherwise -> "is negative."
+    Nothing -> "doesn't exist."
 ```
 
 
