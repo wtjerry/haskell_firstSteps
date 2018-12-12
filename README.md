@@ -193,26 +193,31 @@ double = prod 2
 tripple = prod 3
 ```
 
+```
 Prelude> (\x -> \y -> x * y) 2 3
 6
 Prelude> :t (\x -> \y -> x * y) 2
 (\x -> \y -> x * y) 2 :: Num a => a -> a
+```
 
 ## Why are function types that strange? Why not just split it into params and result?
 In haskell every function is curried.
+```
 (+) :: Num a => a -> a -> a
 the order of evaluating goes as follows:
 (\x -> \y -> x + y) 1 2
 (\x -> 1 + x) 2
 (1 + 2)
 3
+```
 
 and the types will be:
+```
 Num a => a -> a -> a
 Num a => a -> a
 Num a => a
 Num a => a
-
+```
 
 
 # pattern matching & guards
@@ -264,15 +269,15 @@ As with every language the way you solve a problem affects the performance.
 Even if haskell is a functional language and you dont really tell it how to solve a problem but more what you expect and define some edge cases, you will see differences.
 Let's look at the following example:
 
+```
 ghci> :set +s
-
 ghci> last [x | x <- [1..10000000], mod x 3829 == 0]
 9997519
 (5.49 secs, 2,560,263,768 bytes)
-
 ghci> head (filter (\x -> mod x 3829 == 0) [10000000,9999999..0])
 9997519
 (0.01 secs, 730,160 bytes)
+```
 
 There is a quite big difference in whether we build up a list and take the last or just take the first. Both in execution time 5.5 sec vs basically instantaneous and memory 2.5 GB vs 730 Kb.
 
