@@ -308,4 +308,23 @@ instance Functor Maybe where
 When applying a function f to Nothing the result will be Nothing.
 When applying a function f to a (Just x) it will unpack the (Just x) and apply the function to x and repack it again.
 
+<$> is the infix version of fmap
+
+# Applicative
+
+```
+ghci> :t (<*>)
+(<*>) :: Applicative f => f (a -> b) -> f a -> f b
+
+ghci> :t fmap (+) (Just 1)
+fmap (+) (Just 1) :: Num a => Maybe (a -> a)
+```
+
+``` haskell
+fmap (+) [1..10] <*> pure 1
+```
+
+``` haskell
+fmap (*) (Just 10) <*> pure 3
+```
 
