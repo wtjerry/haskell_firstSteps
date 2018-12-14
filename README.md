@@ -318,6 +318,9 @@ ghci> :t (<*>)
 
 ghci> :t fmap (+) (Just 1)
 fmap (+) (Just 1) :: Num a => Maybe (a -> a)
+
+ghci> :t (*>)
+(*>) :: Applicative f => f a -> f b -> f b
 ```
 
 ``` haskell
