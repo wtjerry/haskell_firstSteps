@@ -37,22 +37,18 @@ functions lower case
 Data constructors upper case
 
 ## static vs dynamic typed:
-
-Once a "variable" is bound to a value, it cannot be bound to a value of a differnt type.
-The following wont work in a static typed language:
-```
-x = "hello world"
-x = 5
-```
+is about when type information is acquired (Either at compile time or at runtime)
 
 ## strongly vs weak typed:
-
-Once a "variable" is bound to a value of Type A it cannot be used as if it were Type B without explicitly converting it.
+is about how strictly types are distinguished
+Once a "variable" is bound to a value of Type A it cannot be used as if it were of Type B without explicitly converting it.
 The following wont work in a strongly typed language:
 ```
 a = "10"
 b = a / 2
 ```
+
+https://stackoverflow.com/a/2351203
 
 ## type, type class, data constructor, type constructor
 
