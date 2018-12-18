@@ -30,8 +30,12 @@ maybeFibButReturnInt x = maybe (-1) id (maybeFib x)
 
 
 -- using List comprehension
+fibFast2 :: [Integer]
 fibFast = 1 : 1 : [a + b | (a, b) <- zip fibFast (tail fibFast)]
 
 fibFastX x = head (drop (x-1) fibFast)
 
+-- credits: https://github.com/BinaryTENSHi
+fibFast2 :: [Integer]
+fibFast2 = 1 : 1 : zipWith (+) fib2 (tail fib2)
 
