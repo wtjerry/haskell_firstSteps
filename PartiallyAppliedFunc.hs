@@ -1,6 +1,7 @@
 module PartiallyAppliedFunc where
 
 half = flip div 2
+demoHalf = take 10 $ map half [1..]
 
-appendNewLine [] = "\n"
-appendNewLine (x:xs) = x:appendNewLine(xs)
+squares = map (^2) [1..]
+demoSquares = take 10 squares 
