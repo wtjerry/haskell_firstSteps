@@ -331,3 +331,42 @@ fmap (+) [1..10] <*> pure 1
 fmap (*) (Just 10) <*> pure 3
 ```
 
+# etc
+- what does bottom mean?
+
+bottom also written as _|_ is a member of every type. It represents a infinite / failed computation.
+What does "is memer of" mean? If we have a type Gender
+```haskell
+data Gender = Female | Male`
+```
+which has 2 members (aka data constructor) it implicitly has bottom as a 3rd member.
+
+
+- What is the Unit type aka ()?
+
+```
+ghci> :t ()
+ghci> () :: ()
+```
+That means the value () is of type ().
+The unit type just means there is only one value / member to this type. It is quite boring really.
+It is therefore used whenever some function doesnt return anything interesting but is just used for its effect.
+One example are the functions that return an IO Monad of type IO ().
+```haskell
+ghci> :t putStr
+ghci> putStr :: String -> IO ()
+```
+Because putStr just writes its input to stdout it doesnt return anything useful.
+
+
+- what is a value contructor?
+
+synonym for data constructor
+
+
+- what does inhabited / uninhabited type mean?
+
+A type is inhabited if there is at least one term of that type.
+In contratry it is uninhabited if there is no term of that type / it cannot be constructed.
+Data.Void is one example of an uninhabited type.
+
