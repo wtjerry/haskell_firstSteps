@@ -370,3 +370,12 @@ A type is inhabited if there is at least one term of that type.
 In contratry it is uninhabited if there is no term of that type / it cannot be constructed.
 Data.Void is one example of an uninhabited type.
 
+
+- What is the difference between Monad, Monoid and monadic?
+
+While the terms Monad and monadic are related, Monoid is a different concept.
+Monad is a type class as seen above.
+Monadic code is code that uses Monad functions (eg. >>, >>= and return).
+Monoid is just another type class that is defined as having a identity element (mempty), a function mappend and a function mconcat. In Data.Monoid <> is defined as an operator synonym for mappend.
+https://en.wikibooks.org/wiki/Haskell/Monoids
+
