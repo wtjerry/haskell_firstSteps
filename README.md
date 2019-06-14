@@ -320,10 +320,14 @@ sortBy ascendingNumThenDescendingString a  -- [(1,"dd"),(1,"aa"),(3,"zz")]
 # Functors
 
 A functor is just another type class like Num or our example Colorable.
-It defines a function fmap:
-fmap :: (a -> b) -> f a -> f b
-That means each type that is an instance of Functor can be mapped over with a function.
-[] is such a type ([] is actually just a type constructor but lets let that slide for now). Actually fmap for [] is just map.
+``` haskell
+Functor f
+fmap :: (a -> b) -> f a -> f b  -- aka <$>
+```
+That means each type that has an instance of Functor can be mapped over with a function.
+`[]` is such a type (`[]` is actually just a type constructor but lets let that slide for now). 
+
+In the case of `[]`, `fmap` is just `map`.
 
 Maybe is another instance of Functor:
 ``` haskell
@@ -339,15 +343,11 @@ When applying a function f to a (Just x) it will unpack the (Just x) and apply t
 
 # Applicative
 
-```
-ghci> :t (<*>)
-(<*>) :: Applicative f => f (a -> b) -> f a -> f b
-
-ghci> :t fmap (+) (Just 1)
-fmap (+) (Just 1) :: Num a => Maybe (a -> a)
-
-ghci> :t (*>)
-(*>) :: Applicative f => f a -> f b -> f b
+``` haskell
+Applicative f
+pure :: a -> f a
+<*> :: f (a -> b) -> f a -> f b  -- aka apply
+*> :: f a -> f b -> f b
 ```
 
 ``` haskell
@@ -357,6 +357,17 @@ fmap (+) [1..10] <*> pure 1
 ``` haskell
 fmap (*) (Just 10) <*> pure 3
 ```
+
+Applicatives can be used for functions with multiple arguments while having impure (like Maybe a) values as parameters:
+``` haskell
+f = (+)
+a = Just 1
+b = Just 4
+
+fmap f a <*> b     -- Just 5
+pure f <*> a <*> b -- is euqivalent to the fmap version
+```
+In this example we could not have done someting like `fmap b (fmap f a)` as `fmap f a` results in a `Maybe (a -> a)` but fmap can only map functions of type `(a -> a)`.
 
 
 # monad
