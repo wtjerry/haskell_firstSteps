@@ -285,7 +285,39 @@ There is a quite big difference in whether we build up a list and take the last 
 enumFromTo :: Enum a => a -> a -> [a]
 
 
-# functors
+# Monoid
+
+``` haskell
+Monoid m
+mempty x = x :: a -> a       -- aka id
+mappend :: m a -> m a -> m a -- aka <>
+```
+
+They have to follow 2 laws:
+Associativity:
+``` haskell
+(a . b) . c = a . (b . c)
+```
+Identity:
+``` haskell
+f . mempty = mempty . f = f
+```
+
+To form a Monoid there has to be a set of values, an associative operation and an identity element.
+The type class Num, with the operation addition and the identity element 0 fulfills these requirement.
+The type class Ordering, with the identity element `EQ` forms a Monoid aswell. That way multiple orderings can be combined like so:
+``` haskell
+import Data.List
+import Data.Ord
+
+a = [(1, "dd"), (3, "zz"), (1, "aa")]
+ascendingNumThenDescendingString (n1, s1) (n2, s2) = mappend (compare n1 n2) (compare (Down s1) (Down s2))
+
+sortBy ascendingNumThenDescendingString a  -- [(1,"dd"),(1,"aa"),(3,"zz")]
+```
+
+
+# Functors
 
 A functor is just another type class like Num or our example Colorable.
 It defines a function fmap:
