@@ -285,12 +285,6 @@ There is a quite big difference in whether we build up a list and take the last 
 enumFromTo :: Enum a => a -> a -> [a]
 
 
-# monad
-A monad is a type constructor and a container that supports basic functions to **wrap and unwrap functions as values**.
-
-https://stackoverflow.com/questions/31652475/defining-a-new-monad-in-haskell-raises-no-instance-for-applicative
-
-
 # functors
 
 A functor is just another type class like Num or our example Colorable.
@@ -309,6 +303,7 @@ When applying a function f to Nothing the result will be Nothing.
 When applying a function f to a (Just x) it will unpack the (Just x) and apply the function to x and repack it again.
 
 <$> is the infix version of fmap
+
 
 # Applicative
 
@@ -330,6 +325,100 @@ fmap (+) [1..10] <*> pure 1
 ``` haskell
 fmap (*) (Just 10) <*> pure 3
 ```
+
+
+# monad
+
+## basic definition
+``` haskell
+Monad m
+return :: a -> m a
+>> :: m a -> m b -> m b         -- is called then
+>>= :: m a -> (a -> m b) -> m b -- is called bind (aka flatMap in F#)
+```
+
+In contrast to apply (<*>) from the Applicative Functor, bind is NOT structure preserving as the following example shows:
+``` haskell
+a = [1, 3]
+
+f :: (Num a) => a -> a
+f = (+) 1
+
+g :: a -> [a]
+g = replicate 3
+
+fmap f a     -- [2,4]
+pure f <*> a -- [2,4]
+pure g <*> a -- [[1,1,1],[3,3,3]
+a >>= g      -- [1,1,1,3,3,3]
+```
+
+## explained as container
+A monad is a type constructor and a container that supports basic functions to **wrap and unwrap functions as values**.
+
+https://stackoverflow.com/questions/31652475/defining-a-new-monad-in-haskell-raises-no-instance-for-applicative
+
+## explained as composition enabler
+A normal function uses a regular arrow like so:
+``` haskell
+f :: A -> B
+g :: B -> C
+```
+and can easily be composed:
+``` haskell
+h :: A -> C
+f . g = h
+```
+
+The following are Kleisli arrows:
+```
+f' :: A -> D B
+g' :: B -> D C
+```
+where D might be a List, a Maybe or any other monadic Datatype.
+These cannot be composed so easily.
+The Monad Design Pattern is there to solve this problem. Each Datatype that has an instance of Monad defines in that instance how those arrows can be composed.
+The following series of posts has used railway switches as a metaphor, which in my helps the understanding for Monads like Maybe and Either but not so much for Monds like List or State: https://fsharpforfunandprofit.com/posts/elevated-world-3/
+
+The definition for Maybe looks like the following:
+``` haskell
+data Maybe a = Nothing | Just a
+
+instance Monad Maybe where
+return = Just
+a >> b = b
+Nothing >>= _ = Nothing
+(Just a) >>= f = f a
+```
+
+If Maybe hadn't an instance of Monad and any function in a codebase may fail and therefore return a Maybe a, all other functions would have to be changed to take and return a Maybe a.
+Also each one would have to pattern match for Nothing on the input.
+With the instance of Monad, the other functions can stay and just be used with bind.
+
+## explained in terms of Monoid
+Link: https://www.stackoverflow.com/a/7829607 :
+"a monad is a structure that defines a way to combine (the results of) functions,
+analogously to how a monoid is a structure that defines a way to combine objects"
+
+While (+) defines the combination (addition) of numbers and (++) defines the combination (concatination) of lists there is something similar for Monads. In Haskell this function is called join (flatten in F#)
+``` haskell
+join :: (Monad m) => m (m a) -> m a
+```
+
+If we want to compose 2 functions of the form 
+`a -> m a`
+bind could be explained like so:
+
+1. compute the results of the first function
+2. apply the second function to each result
+3. combine it
+
+for the List Monad the output of each step could look like the following:
+
+1. `[1, 2, 3]`
+2. `[[1, 1], [2, 2], [3, 3]]`
+3. `[1, 1, 2, 2, 3, 3]`
+
 
 # etc
 - what does bottom mean?
