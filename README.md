@@ -50,6 +50,50 @@ b = a / 2
 
 https://stackoverflow.com/a/2351203
 
+## Polymorphism
+There are generally 3 types of polymorphism
+- Subtyping
+- Ad hoc / constrained polymorphism
+- parametric polymorphism
+
+Haskell uses the later two. Subtyping doesn't exist in haskell as there is no concept or hierarchy of types like there is in languages like c#.
+
+### Ad hoc / constrained polymorphism
+A function / operator can be overloaded, i.e. change the semantic, depending on what type(s) it is applied to.
+In haskell this is usually done with type classes.
+In the following example we see the function `length` defined as taking an argument of type `Foldable a` and returning a value of type Int. We may also say `a` is constrained by `Foldable`.
+
+``` haskell
+length :: Foldable t => t a -> Int
+```
+
+`Foldable` is a type class. `[]` and `Maybe` habe an instance for that typeclass. That's why we can use length with `[]` and also with `Maybe`:
+
+``` haskell
+length ['a', 'b', 'c']
+-- 3
+length $ Just 9
+-- 1
+length Nothing
+-- 0
+```
+
+### Parametric polymorphism
+Refers to a function or DataType, although they kind of are also functions, with a unconstrained type variable.
+In the example of the id function
+
+``` haskell
+id :: a -> a
+```
+
+we see that a can stand for any type. To be more specific it can stand for any proper type, i.e. of Kind `Type`, or in older examples `*`.
+The same goes for the a, b and c in the following examples:
+
+``` haskell
+flip :: (a -> b -> c) -> b -> a -> c
+Maybe a
+```
+
 ## type, type class, data constructor, type constructor
 
 type:
