@@ -369,6 +369,47 @@ pure f <*> a <*> b -- is euqivalent to the fmap version
 ```
 In this example we could not have done someting like `fmap b (fmap f a)` as `fmap f a` results in a `Maybe (a -> a)` but fmap can only map functions of type `(a -> a)`.
 
+## Example for usage in validation
+
+Credits: Chapter 12 of http://haskellbook.com/
+Given the following types:
+
+``` haskell
+data Person = MkP String Integer deriving (Show)
+data PersonInvalid = NameInvalid | AgeToLow deriving (Show)
+nameOkay :: String -> Either [PersonInvalid] String
+ageOkay :: Integer -> Either [PersonInvalid] Integer
+```
+
+it would be nice to create a function that safely constructs a Person or returns ALL validation errors that occured.
+Exactly that is possible by lifting the `MkP` function into Applicative space with `liftA2`.
+
+``` haskell
+liftA2 :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
+```
+
+We can transform the function
+
+``` haskell
+MkP :: String -> Integer -> Person
+```
+
+into a function with signature
+
+``` haskell
+   Either [PersonInvalid] String
+-> Either [PersonInvalid] Integer
+-> Either [PersonInvalid] Person
+```
+
+We can see that the type variable `f` in the `liftA2` signature takes on `Either [PersonInvalid]`
+
+Applying this new knowledge we can finally create that validation function:
+
+``` haskell
+mkPerson :: String -> Integer -> Either [PersonInvalid] Person
+mkPerson name age = liftA2 MkP (nameOkay name) (ageOkay age)
+```
 
 # monad
 
