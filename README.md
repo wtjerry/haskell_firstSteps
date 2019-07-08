@@ -466,10 +466,10 @@ for the List Monad the output of each step could look like the following:
 # etc
 - what does bottom mean?
 
-bottom also written as _|_ is a member of every type. It represents a infinite / failed computation.
+bottom also written as `_|_ ` is a member of every type. It represents an infinite / failed computation.
 What does "is memer of" mean? If we have a type Gender
 ```haskell
-data Gender = Female | Male`
+data Gender = Female | Male
 ```
 which has 2 members (aka data constructor) it implicitly has bottom as a 3rd member.
 
