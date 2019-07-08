@@ -94,6 +94,63 @@ flip :: (a -> b -> c) -> b -> a -> c
 Maybe a
 ```
 
+## Kinds
+Haskell has 3 levels of 'things':
+1. Terms / Expressions
+2. Types
+3. Kinds
+
+(The language is actually in the process of merging Types and Kinds into one level but lets forget that for a moment)
+
+Terms exist at runtime. A few examples of terms are:
+
+``` haskell
+42
+"Hello World"
+[1,2,3]
+1 + 2 + 9001
+Just "works"
+(++) " World"
+length
+```
+
+Terms inhabit Types, which don't exist at runtime. The previous' examples types are as following:
+
+``` haskell
+Integer   -- actually any type constrained by Num
+String    -- actually [Char] as string is just a type alias
+[Integer] -- again not just Integer but could be any type constrined by Num
+Integer   -- same as with 42
+Maybe String
+String -> String
+Foldable t => t a -> Int
+```
+
+All but the last 2 look similar. When fully reduced, those terms are just constants.
+But the last 2 are are still functions. They still need an argument to be able to be fully reduced to a value.
+
+Now we have seen what a type is. But how can we abstract even further?
+Consider the following 3 Data types:
+
+``` haskell
+Integer
+Maybe a
+Either a b
+```
+
+They all kind of look differnt. Lets look at their kinds: (:k in ghci)
+```
+Integer :: *
+Maybe   :: * -> *
+Either  :: * -> * -> *
+```
+
+The symbol `*` is a synonym to Type here.
+The `::` part here doesn't indicate the type as with functions, but the kind.
+`Integer` has no free type variable, it is a fully applied type, and therefore has kind `*`.
+`Maybe` still needs one type variable to be applied. `Maybe String` for example would be of kind `*`
+
+
 ## type, type class, data constructor, type constructor
 
 type:
