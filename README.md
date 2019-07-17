@@ -27,10 +27,16 @@ If you are looking to learn about / understand something in particular, try a ke
 ## Installation & Usage
 
 ### Installation
-apt install haskell-platform
+see https://docs.haskellstack.org
+Install stack, a tool for building (using ghc) and dependency management.
+
+If you just need to build / run single files you may be better of starting with plain ghc:
+https://www.haskell.org/ghc/download.html
+or get it with your favourite package manager.
+
 
 ### Startup
-to startup up a interactive haskell interpreter:
+to startup an interactive haskell interpreter:
 ``` sh
 ghci
 ``` 
@@ -50,8 +56,8 @@ once the module is loaded you may call methods like this:
 areStringEq "hello" ('h':'e':'l':'l':'o':[])
 ```
 
-Examples in this document work best by putting them into a hs file and loading it with ghci.
-They may however also work if 'let' is used to bind functions.
+Examples in this document work best by putting them into a .hs file and loading it with ghci.
+
 
 
 ## Concept explanations
