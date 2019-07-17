@@ -1,20 +1,20 @@
 # First steps in haskell
-This project acts as a braindump in my journey of learning Haskell.
+This project acts as a brain dump in my journey of learning Haskell.
 It consists of:
 - Installation & basic usage instructions (this README)
 - chapters in which i try to explain concepts in my own words (this README)
-- codewars challanges (subfolder codewars)
+- codewars challenges (subfolder codewars)
 - Haskell Programming From First Principles exercises (subfolder hpffp)
 - Random exercises / ideas (*.hs in root folder)
 
 
-Altough i am still far of knowing Haskell fully well, in my opinion it is not a difficult language to apply. It is not even difficult to learn. However it is difficult to teach.
+Although i am still far of knowing Haskell fully well, in my opinion it is not a difficult language to apply. It is not even difficult to learn. However it is difficult to teach.
 As it is a language with the goal to unify FP principles into one language and give cutting edge research a common ground, many concepts are explained in research papers.
 The language & terminology used is many times not beginner friendly.
 As Haskell is a pure (here meaning no side effects) language, you need to learn about many concepts first to be able to understand even a very simple program.
 
 
-There are many attempts in changing that. Here are some of my recomendations (i am in no way affiliated with any of them):
+There are many attempts in changing that. Here are some of my recommendations (i am in no way affiliated with any of them):
 - http://haskellbook.com/ (Haskell Programming From First Principles)
 - https://en.wikibooks.org/wiki/Haskell#Beginner's_Track
 - https://hoogle.haskell.org/
@@ -62,10 +62,11 @@ Examples in this document work best by putting them into a .hs file and loading 
 Both stack and ghci can be configured.
 - ~/.stack/config.yaml
 - ~/.ghc/ghci.conf
+
 Feel free to look at my personal configurations in my dotfiles repo: https://github.com/wtjerry/dotfiles
 
 ### IDE
-In my opinion Haskell is definetely lacking in IDE quality compared to languages like Java with IntelliJ or c# with VS & ReSharper.
+In my opinion Haskell is definitely lacking in IDE quality compared to languages like Java with IntelliJ or c# with VS & ReSharper.
 
 For simple tasks i use vi with the YouCompleteMe plugin. (see my .vimrc at https://github.com/wtjerry/dotfiles)
 
@@ -124,7 +125,7 @@ length Nothing
 ```
 
 ##### Parametric polymorphism
-Refers to a function or DataType, although they kind of are also functions, with a unconstrained type variable.
+Refers to a function or DataType, although they kind of are also functions, with an unconstrained type variable.
 In the example of the id function
 
 ``` haskell
@@ -164,7 +165,7 @@ Terms inhabit Types, which don't exist at runtime. The previous' examples types 
 ``` haskell
 Integer   -- actually any type constrained by Num
 String    -- actually [Char] as string is just a type alias
-[Integer] -- again not just Integer but could be any type constrined by Num
+[Integer] -- again not just Integer but could be any type constrained by Num
 Integer   -- same as with 42
 Maybe String
 String -> String
@@ -183,7 +184,7 @@ Maybe a
 Either a b
 ```
 
-They all kind of look differnt. Lets look at their kinds: (:k in ghci)
+They all kind of look different. Lets look at their kinds: (:k in ghci)
 ```
 Integer :: *
 Maybe   :: * -> *
@@ -241,22 +242,22 @@ But Maybe is not a type but a type constructor.
 So something cannot be of type Maybe. It can however be of type Maybe String.
 
 
-#### type class
+#### Type class
 
-A type class defines a set of functions that is will be avaialbe to all instances of that class.
+A type class defines a set of functions that is will be available to all instances of that class.
 a type can be made an instance of such a class by either using the deriving part when creating the type, or using the instance of construct.
-Classes sometimes provide default implementations for the defined functions. They can be overriden by using the instance of construct.
+Classes sometimes provide default implementations for the defined functions. They can be overridden by using the instance of construct.
 
 To see the instances of a type class you may use :info YourTypeClass
 The Num class defines: (+), (*), abs, signum, fromInteger, (negate | (-))
-Therefore whenver a Num is required by a method, an Integer (or others) may be used, similar to an interface in Java
+Therefore whenever a Num is required by a method, an Integer (or others) may be used, similar to an interface in Java
 difference to interface:
 ``` haskell
 addNum :: Num c => c -> c -> c
 addNum x y = x + y
 ```
 
-in this exmample addNum takes a type of class Num and returns a the same type.
+in this example addNum takes a type of class Num and returns a the same type.
 If we would pass an Integer to addNum we would be guaranteed to receive an Integer and not just any Type of class Num.
 To proof this:
 
@@ -305,7 +306,7 @@ but not
 newtype Pair a b = Pair a b
 ```
 
-Internally when a newtype is used GHC doesnt need to use indirection but can treat the Type Identity and the contained value a as the same.
+Internally when a newtype is used GHC doesn't need to use indirection but can treat the Type Identity and the contained value a as the same.
 https://wiki.haskell.org/Newtype
 
 
@@ -319,8 +320,8 @@ map (+ 1) [1, 2, 3]
 (+) is a function of type:
 (+) :: Num a => a -> a -> a
 it takes 2 parameters of type class Num and returns one result of type class Num.
-In the example above one 1 paramter was applied to the + function. The result of that is a new function with the definition Num a => a -> a
-Once another paramater is applied a type class Num is returned. This happends when map applies each element to that function.
+In the example above one 1 parameter was applied to the (+) function. The result of that is a new function with the definition Num a => a -> a
+Once another parameter is applied a type class Num is returned. This happens when map applies each element to that function.
 
 Another example (use :t to see function definition)
 ``` haskell
@@ -511,9 +512,9 @@ a = Just 1
 b = Just 4
 
 fmap f a <*> b     -- Just 5
-pure f <*> a <*> b -- is euqivalent to the fmap version
+pure f <*> a <*> b -- is equivalent to the fmap version
 ```
-In this example we could not have done someting like `fmap b (fmap f a)` as `fmap f a` results in a `Maybe (a -> a)` but fmap can only map functions of type `(a -> a)`.
+In this example we could not have done something like `fmap b (fmap f a)` as `fmap f a` results in a `Maybe (a -> a)` but fmap can only map functions of type `(a -> a)`.
 
 #### Example for usage in validation
 
@@ -527,7 +528,7 @@ nameOkay :: String -> Either [PersonInvalid] String
 ageOkay :: Integer -> Either [PersonInvalid] Integer
 ```
 
-it would be nice to create a function that safely constructs a Person or returns ALL validation errors that occured.
+it would be nice to create a function that safely constructs a Person or returns ALL validation errors that occurred.
 Exactly that is possible by lifting the `MkP` function into Applicative space with `liftA2`.
 
 ``` haskell
@@ -588,7 +589,7 @@ A monad is a type constructor and a container that supports basic functions to *
 
 https://stackoverflow.com/questions/31652475/defining-a-new-monad-in-haskell-raises-no-instance-for-applicative
 
-#### explained as composition enabler
+#### Explained as composition enabler
 A normal function uses a regular arrow like so:
 ``` haskell
 f :: A -> B
@@ -608,7 +609,7 @@ g' :: B -> D C
 where D might be a List, a Maybe or any other monadic Datatype.
 These cannot be composed so easily.
 The Monad Design Pattern is there to solve this problem. Each Datatype that has an instance of Monad defines in that instance how those arrows can be composed.
-The following series of posts has used railway switches as a metaphor, which in my helps the understanding for Monads like Maybe and Either but not so much for Monds like List or State: https://fsharpforfunandprofit.com/posts/elevated-world-3/
+The following series of posts has used railway switches as a metaphor, which in my helps the understanding for Monads like Maybe and Either but not so much for Monads like List or State: https://fsharpforfunandprofit.com/posts/elevated-world-3/
 
 The definition for Maybe looks like the following:
 ``` haskell
@@ -630,7 +631,7 @@ Link: https://www.stackoverflow.com/a/7829607 :
 "a monad is a structure that defines a way to combine (the results of) functions,
 analogously to how a monoid is a structure that defines a way to combine objects"
 
-While (+) defines the combination (addition) of numbers and (++) defines the combination (concatination) of lists there is something similar for Monads. In Haskell this function is called join (flatten in F#)
+While (+) defines the combination (addition) of numbers and (++) defines the combination (concatenation) of lists there is something similar for Monads. In Haskell this function is called join (flatten in F#)
 ``` haskell
 join :: (Monad m) => m (m a) -> m a
 ```
@@ -654,7 +655,7 @@ for the List Monad the output of each step could look like the following:
 - what does bottom mean?
 
 bottom also written as `_|_ ` is a member of every type. It represents an infinite / failed computation.
-What does "is memer of" mean? If we have a type Gender
+What does "is member of" mean? If we have a type Gender
 ```haskell
 data Gender = Female | Male
 ```
@@ -678,7 +679,7 @@ ghci> putStr :: String -> IO ()
 Because putStr just writes its input to stdout it doesnt return anything useful.
 
 
-- what is a value contructor?
+- what is a value constructor?
 
 synonym for data constructor
 
@@ -686,7 +687,7 @@ synonym for data constructor
 - what does inhabited / uninhabited type mean?
 
 A type is inhabited if there is at least one term of that type.
-In contratry it is uninhabited if there is no term of that type / it cannot be constructed.
+In contrary it is uninhabited if there is no term of that type / it cannot be constructed.
 Data.Void is one example of an uninhabited type.
 
 
