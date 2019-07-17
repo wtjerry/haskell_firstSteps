@@ -24,10 +24,12 @@ There are many attempts in changing that. Here are some of my recomendations (i 
 If you are looking to learn about / understand something in particular, try a keyword search in this README.
 
 
-## Installation
+## Installation & Usage
+
+### Installation
 apt install haskell-platform
 
-## startup
+### Startup
 to startup up a interactive haskell interpreter:
 ``` sh
 ghci
@@ -42,7 +44,7 @@ to find out about a method / type:
 :t map 
 ```
 
-## usage
+### Usage
 once the module is loaded you may call methods like this:
 ``` haskell
 areStringEq "hello" ('h':'e':'l':'l':'o':[])
@@ -51,7 +53,10 @@ areStringEq "hello" ('h':'e':'l':'l':'o':[])
 Examples in this document work best by putting them into a hs file and loading it with ghci.
 They may however also work if 'let' is used to bind functions.
 
-# type system
+
+## Concept explanations
+
+### Type system
 
 Haskell is strongly static typed. Compared to python which would be dynamic weak typed.
 see http://learnyouahaskell.com/types-and-typeclasses
@@ -59,10 +64,10 @@ see http://learnyouahaskell.com/types-and-typeclasses
 functions lower case
 Data constructors upper case
 
-## static vs dynamic typed:
+#### Static vs dynamic typed:
 is about when type information is acquired (Either at compile time or at runtime)
 
-## strongly vs weak typed:
+#### Strongly vs weak typed:
 is about how strictly types are distinguished
 Once a "variable" is bound to a value of Type A it cannot be used as if it were of Type B without explicitly converting it.
 The following wont work in a strongly typed language:
@@ -73,7 +78,7 @@ b = a / 2
 
 https://stackoverflow.com/a/2351203
 
-## Polymorphism
+#### Polymorphism
 There are generally 3 types of polymorphism
 - Subtyping
 - Ad hoc / constrained polymorphism
@@ -81,7 +86,7 @@ There are generally 3 types of polymorphism
 
 Haskell uses the later two. Subtyping doesn't exist in haskell as there is no concept or hierarchy of types like there is in languages like c#.
 
-### Ad hoc / constrained polymorphism
+##### Ad hoc / constrained polymorphism
 A function / operator can be overloaded, i.e. change the semantic, depending on what type(s) it is applied to.
 In haskell this is usually done with type classes.
 In the following example we see the function `length` defined as taking an argument of type `Foldable a` and returning a value of type Int. We may also say `a` is constrained by `Foldable`.
@@ -101,7 +106,7 @@ length Nothing
 -- 0
 ```
 
-### Parametric polymorphism
+##### Parametric polymorphism
 Refers to a function or DataType, although they kind of are also functions, with a unconstrained type variable.
 In the example of the id function
 
@@ -117,7 +122,7 @@ flip :: (a -> b -> c) -> b -> a -> c
 Maybe a
 ```
 
-## Kinds
+#### Kinds
 Haskell has 3 levels of 'things':
 1. Terms / Expressions
 2. Types
@@ -174,7 +179,7 @@ The `::` part here doesn't indicate the type as with functions, but the kind.
 `Maybe` still needs one type variable to be applied. `Maybe String` for example would be of kind `*`
 
 
-## type, type class, data constructor, type constructor
+#### Type, type class, data constructor, type constructor
 
 type:
 - Bool
@@ -219,7 +224,7 @@ But Maybe is not a type but a type constructor.
 So something cannot be of type Maybe. It can however be of type Maybe String.
 
 
-## type class
+#### type class
 
 A type class defines a set of functions that is will be avaialbe to all instances of that class.
 a type can be made an instance of such a class by either using the deriving part when creating the type, or using the instance of construct.
@@ -251,7 +256,7 @@ showDouble (addNum i1 i2)
 
 here i1 and i2 are of type Integer and showDouble only takes a Double. Both Integer and Double would be of class Num. But when calling the function showDouble with the output of addNum while passing 2 Integers we receive an Exception.
 
-### custom type class
+##### Custom type class
 
 ``` haskell
 data Color = Green | Blue | Red | Yellow deriving (Show)
@@ -267,7 +272,7 @@ instance Colorable Integer where
 ```
 
 
-## newtype vs data vs type
+#### Newtype vs data vs type
 
 While newtype and data are able to create new types, type only creates a synonym.
 ``` haskell
@@ -287,7 +292,7 @@ Internally when a newtype is used GHC doesnt need to use indirection but can tre
 https://wiki.haskell.org/Newtype
 
 
-# currying
+### Currying
 
 ``` haskell
 map (+ 1) [1, 2, 3]
@@ -320,7 +325,7 @@ Prelude> :t (\x -> \y -> x * y) 2
 (\x -> \y -> x * y) 2 :: Num a => a -> a
 ```
 
-## Why are function types that strange? Why not just split it into params and result?
+#### Why are function types that strange? Why not just split it into params and result?
 In haskell every function is curried.
 ```
 (+) :: Num a => a -> a -> a
@@ -340,7 +345,7 @@ Num a => a
 ```
 
 
-# pattern matching & guards
+### Pattern matching & guards
 
 pattern matching on function level:
 ``` haskell
@@ -383,7 +388,7 @@ describeMaybeInt m = "The int " ++ case m of
 ```
 
 
-# performance
+### Performance
 
 As with every language the way you solve a problem affects the performance.
 Even if haskell is a functional language and you dont really tell it how to solve a problem but more what you expect and define some edge cases, you will see differences.
@@ -402,14 +407,14 @@ ghci> head (filter (\x -> mod x 3829 == 0) [10000000,9999999..0])
 There is a quite big difference in whether we build up a list and take the last or just take the first. Both in execution time 5.5 sec vs basically instantaneous and memory 2.5 GB vs 730 Kb.
 
 
-# syntactic sugar
+### Syntactic sugar
 
 [a..b] desugars into enumFromTo a b
 
 enumFromTo :: Enum a => a -> a -> [a]
 
 
-# Monoid
+###Explanations of concepts Monoid
 
 ``` haskell
 Monoid m
@@ -441,7 +446,7 @@ sortBy ascendingNumThenDescendingString a  -- [(1,"dd"),(1,"aa"),(3,"zz")]
 ```
 
 
-# Functors
+### Functors
 
 A functor is just another type class like Num or our example Colorable.
 ``` haskell
@@ -465,7 +470,7 @@ When applying a function f to a (Just x) it will unpack the (Just x) and apply t
 <$> is the infix version of fmap
 
 
-# Applicative
+### Applicative
 
 ``` haskell
 Applicative f
@@ -493,7 +498,7 @@ pure f <*> a <*> b -- is euqivalent to the fmap version
 ```
 In this example we could not have done someting like `fmap b (fmap f a)` as `fmap f a` results in a `Maybe (a -> a)` but fmap can only map functions of type `(a -> a)`.
 
-## Example for usage in validation
+#### Example for usage in validation
 
 Credits: Chapter 12 of http://haskellbook.com/
 Given the following types:
@@ -535,9 +540,9 @@ mkPerson :: String -> Integer -> Either [PersonInvalid] Person
 mkPerson name age = liftA2 MkP (nameOkay name) (ageOkay age)
 ```
 
-# monad
+### Monad
 
-## basic definition
+#### Basic definition
 ``` haskell
 Monad m
 return :: a -> m a
@@ -561,12 +566,12 @@ pure g <*> a -- [[1,1,1],[3,3,3]
 a >>= g      -- [1,1,1,3,3,3]
 ```
 
-## explained as container
+#### Explained as container
 A monad is a type constructor and a container that supports basic functions to **wrap and unwrap functions as values**.
 
 https://stackoverflow.com/questions/31652475/defining-a-new-monad-in-haskell-raises-no-instance-for-applicative
 
-## explained as composition enabler
+#### explained as composition enabler
 A normal function uses a regular arrow like so:
 ``` haskell
 f :: A -> B
@@ -603,7 +608,7 @@ If Maybe hadn't an instance of Monad and any function in a codebase may fail and
 Also each one would have to pattern match for Nothing on the input.
 With the instance of Monad, the other functions can stay and just be used with bind.
 
-## explained in terms of Monoid
+#### Explained in terms of Monoid
 Link: https://www.stackoverflow.com/a/7829607 :
 "a monad is a structure that defines a way to combine (the results of) functions,
 analogously to how a monoid is a structure that defines a way to combine objects"
@@ -628,7 +633,7 @@ for the List Monad the output of each step could look like the following:
 3. `[1, 1, 2, 2, 3, 3]`
 
 
-# etc
+### FAQ
 - what does bottom mean?
 
 bottom also written as `_|_ ` is a member of every type. It represents an infinite / failed computation.
@@ -677,10 +682,10 @@ Monoid is just another type class that is defined as having a identity element (
 https://en.wikibooks.org/wiki/Haskell/Monoids
 
 
-# Contributing
+## Contributing
 Feel free to create a pull request.
 
 
-# License
+## License
 This project is released under the GPLv3 license.
 
