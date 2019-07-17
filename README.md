@@ -676,3 +676,7 @@ Monadic code is code that uses Monad functions (eg. >>, >>= and return).
 Monoid is just another type class that is defined as having a identity element (mempty), a function mappend and a function mconcat. In Data.Monoid <> is defined as an operator synonym for mappend.
 https://en.wikibooks.org/wiki/Haskell/Monoids
 
+
+# License
+This project is released under the GPLv3 license.
+
