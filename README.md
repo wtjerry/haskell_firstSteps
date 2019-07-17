@@ -64,6 +64,12 @@ Both stack and ghci can be configured.
 - ~/.ghc/ghci.conf
 Feel free to look at my personal configurations in my dotfiles repo: https://github.com/wtjerry/dotfiles
 
+### IDE
+In my opinion Haskell is definetely lacking in IDE quality compared to languages like Java with IntelliJ or c# with VS & ReSharper.
+
+For simple tasks i use vi with the YouCompleteMe plugin. (see my .vimrc at https://github.com/wtjerry/dotfiles)
+
+For projects bigger than one file or more difficult tasks i currently use IntelliJ together with IntelliJ-Haskell (https://plugins.jetbrains.com/plugin/8258-intellij-haskell)
 
 ## Concept explanations
 
