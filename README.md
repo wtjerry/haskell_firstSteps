@@ -58,6 +58,11 @@ areStringEq "hello" ('h':'e':'l':'l':'o':[])
 
 Examples in this document work best by putting them into a .hs file and loading it with ghci.
 
+### Configurations
+Both stack and ghci can be configured.
+- ~/.stack/config.yaml
+- ~/.ghc/ghci.conf
+Feel free to look at my personal configurations in my dotfiles repo: https://github.com/wtjerry/dotfiles
 
 
 ## Concept explanations
