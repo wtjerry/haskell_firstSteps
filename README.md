@@ -1,5 +1,28 @@
 # First steps in haskell
-The following should act as a walkthrough from installing haskell, over loading your first module, to running your first small program.
+This project acts as a braindump in my journey of learning Haskell.
+It consists of:
+- Installation & basic usage instructions (this README)
+- chapters in which i try to explain concepts in my own words (this README)
+- codewars challanges (subfolder codewars)
+- Haskell Programming From First Principles exercises (subfolder hpffp)
+- Random exercises / ideas (*.hs in root folder)
+
+
+Altough i am still far of knowing Haskell fully well, in my opinion it is not a difficult language to apply. It is not even difficult to learn. However it is difficult to teach.
+As it is a language with the goal to unify FP principles into one language and give cutting edge research a common ground, many concepts are explained in research papers.
+The language & terminology used is many times not beginner friendly.
+As Haskell is a pure (here meaning no side effects) language, you need to learn about many concepts first to be able to understand even a very simple program.
+
+
+There are many attempts in changing that. Here are some of my recomendations (i am in no way affiliated with any of them):
+- http://haskellbook.com/ (Haskell Programming From First Principles)
+- https://en.wikibooks.org/wiki/Haskell#Beginner's_Track
+- https://hoogle.haskell.org/
+- https://fsharpforfunandprofit.com/posts/elevated-world/ (not haskell but still applicable for learning the concepts behind)
+
+
+If you are looking to learn about / understand something in particular, try a keyword search in this README.
+
 
 ## Installation
 apt install haskell-platform
