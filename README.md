@@ -677,6 +677,10 @@ Monoid is just another type class that is defined as having a identity element (
 https://en.wikibooks.org/wiki/Haskell/Monoids
 
 
+# Contributing
+Feel free to create a pull request.
+
+
 # License
 This project is released under the GPLv3 license.
 
