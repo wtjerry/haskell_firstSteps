@@ -1,0 +1,5 @@
+.stack-work/
+hpffp.cabal
+*~
+*.iml
+out/
