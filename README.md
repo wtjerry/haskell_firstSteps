@@ -60,6 +60,7 @@ If you are looking to learn about / understand something in particular, try a ke
             2. [Explained as container](#Explained_as_container)
             3. [Explained as composition enabler](#Explained_as_composition_enabler)
             4. [Explained in terms of Monoid](#Explained_in_terms_of_Monoid)
+            5. [Differences to Applicative](#Differences_to_Applicative)
     10. [FAQ](#FAQ)
     3. [Contributing](#Contributing)
     4. [License](#License)
@@ -753,6 +754,25 @@ for the List Monad the output of each step could look like the following:
 1. `[1, 2, 3]`
 2. `[[1, 1], [2, 2], [3, 3]]`
 3. `[1, 1, 2, 2, 3, 3]`
+
+#### Differences to Applicative <a name="Differences_to_Applicative"/>
+
+Lets compare the 2 main functions of Applicative and Monad:
+
+``` haskell
+(<*>)  :: Applicative f => f (a -> b) -> f a        -> f b
+(>>=)  :: Monad m       => m a        -> (a -> m b) -> m b
+-- the following is apply but with the arguments inversed
+(<**>) :: Applicative f => f a        -> f (a -> b) -> f b
+```
+
+We can ususally think of Applicative and Monad being structure.
+
+We can see that `<*>` has no way of influencing the computation with its second argument, as it is just a value withing a structure.
+`>>=` on the other hand has a function from value to value in Monadic structure. It can change the outcome based on the previous value.
+Even if we reverse the arguments like with `<**>` the second argument is a function embedded within structure and can therefore still not change the outcome.
+
+For a great example and a more detailed explanation of this see: https://stackoverflow.com/a/17412402
 
 
 ### FAQ
