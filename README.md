@@ -18,6 +18,7 @@ There are many attempts to change that. Some of my recommendations (i am in no w
 - http://haskellbook.com/ (Haskell Programming From First Principles)
 - https://en.wikibooks.org/wiki/Haskell#Beginner's_Track
 - https://hoogle.haskell.org/
+- https://wiki.haskell.org/Typeclassopedia (great overview over the most important type classes)
 - https://fsharpforfunandprofit.com/posts/elevated-world/ (not haskell but still applicable for learning the concepts behind)
 
 
@@ -25,41 +26,42 @@ If you are looking to learn about / understand something in particular, try a ke
 
 
 1. [First steps with haskell](#First_steps_with_haskell)
-	1. [Installation & Usage](#Installation_&_Usage)
-		1. [Installation](#Installation)
-		2. [Startup](#Startup)
-		3. [Usage](#Usage)
-		4. [Configurations](#Configurations)
-		5. [IDE](#IDE)
-	2. [Concept explanations](#Concept_explanations)
-		1. [Type system](#Type_system)
-			1. [Static vs dynamic typed](#Static_vs_dynamic_typed)
-			2. [Strongly vs weak typed](#Strongly_vs_weak_typed)
-			3. [Polymorphism](#Polymorphism)
-				1. [Ad hoc / constrained polymorphism](#Ad_hoc_/_constrained_polymorphism)
-				2. [Parametric polymorphism](#Parametric_polymorphism)
-			4. [Kinds](#Kinds)
-			5. [Type, type class, data constructor, type constructor](#Type,_type_class,_data_constructor,_type_constructor)
-			6. [Type class](#Type_class)
-				1. [Custom type class](#Custom_type_class)
-			7. [Newtype vs data vs type](#Newtype_vs_data_vs_type)
-		2. [Currying](#Currying)
-			1. [Why are function types that strange? Why not just split it into params and result?](#Why_are_function_types_that_strange?_Why_not_just_split_it_into_params_and_result?)
-		3. [Pattern matching & guards](#Pattern_matching_&_guards)
-		4. [Performance](#Performance)
-		5. [Syntactic sugar](#Syntactic_sugar)
-		6. [Monoid](#Monoid)
-		7. [Functors](#Functors)
-		8. [Applicative](#Applicative)
-			1. [Example for usage in validation](#Example_for_usage_in_validation)
-		9. [Monad](#Monad)
-			1. [Basic definition](#Basic_definition)
-			2. [Explained as container](#Explained_as_container)
-			3. [Explained as composition enabler](#Explained_as_composition_enabler)
-			4. [Explained in terms of Monoid](#Explained_in_terms_of_Monoid)
-		10. [FAQ](#FAQ)
-	3. [Contributing](#Contributing)
-	4. [License](#License)
+    1. [Installation & Usage](#Installation_&_Usage)
+        1. [Installation](#Installation)
+        2. [Startup](#Startup)
+        3. [Usage](#Usage)
+        4. [Configurations](#Configurations)
+        5. [IDE](#IDE)
+    2. [Concept explanations](#Concept_explanations)
+        1. [Type system](#Type_system)
+            1. [Static vs dynamic typed](#Static_vs_dynamic_typed)
+            2. [Strongly vs weak typed](#Strongly_vs_weak_typed)
+            3. [Polymorphism](#Polymorphism)
+                1. [Ad hoc / constrained polymorphism](#Ad_hoc_/_constrained_polymorphism)
+                2. [Parametric polymorphism](#Parametric_polymorphism)
+            4. [Kinds](#Kinds)
+            5. [Type, type class, data constructor, type constructor](#Type,_type_class,_data_constructor,_type_constructor)
+            6. [Type class](#Type_class)
+                1. [Custom type class](#Custom_type_class)
+            7. [Newtype vs data vs type](#Newtype_vs_data_vs_type)
+        2. [Currying](#Currying)
+            1. [Why are function types that strange? Why not just split it into params and result?](#Why_are_function_types_that_strange?_Why_not_just_split_it_into_params_and_result?)
+        3. [Pattern matching & guards](#Pattern_matching_&_guards)
+        4. [Performance](#Performance)
+        5. [Syntactic sugar](#Syntactic_sugar)
+        6. [Monoid](#Monoid)
+        7. [Functors](#Functors)
+            1. [Bifunctors](#Bifunctors)
+        8. [Applicative](#Applicative)
+            1. [Example for usage in validation](#Example_for_usage_in_validation)
+        9. [Monad](#Monad)
+            1. [Basic definition](#Basic_definition)
+            2. [Explained as container](#Explained_as_container)
+            3. [Explained as composition enabler](#Explained_as_composition_enabler)
+            4. [Explained in terms of Monoid](#Explained_in_terms_of_Monoid)
+    10. [FAQ](#FAQ)
+    3. [Contributing](#Contributing)
+    4. [License](#License)
 
 
 ## Installation & Usage <a name="Installation_&_Usage"/>
@@ -524,6 +526,36 @@ When applying a function f to Nothing the result will be Nothing.
 When applying a function f to a (Just x) it will unpack the (Just x) and apply the function to x and repack it again.
 
 <$> is the infix version of fmap
+
+The kind of Functor is `* -> *`. Therefore `Maybe` matches perfectly. However `Either` is of kind `* -> * -> *` and can therefore not have an instance of Functor like this.
+The Functor instance of Either is allows you to only map a function over the `Right` values:
+
+``` haskell
+data Either a b = Left a | Right b
+instance Functor (Either a) where
+    fmap _ (Left a) = Left a
+    fmap f (Right b) = Right $ f b
+```
+
+#### Bifunctor
+
+We saw the Functor instance for `Either a` but what if we want to map over `Left` and `Right` values?
+Or more abstract what if we want to create a Functor for Types of kind `* -> * -> *`?
+That's when we use the Bifunctor type class:
+
+``` haskell
+class Bifunctor p where
+    bimap :: (a -> c) -> (b -> d) -> p a b -> p c d
+```
+
+Notice `p` here is of kind `* -> * -> *`.
+The `Either` instance looks like this:
+
+``` haskell
+instance Bifunctor Either where
+    bimap f _ (Left a) = Left $ f a
+    bimap _ g (Right b) = Right $ g b
+```
 
 
 ### Applicative
