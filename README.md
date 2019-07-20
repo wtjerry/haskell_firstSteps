@@ -54,6 +54,7 @@ If you are looking to learn about / understand something in particular, try a ke
             1. [Bifunctors](#Bifunctors)
         8. [Applicative](#Applicative)
             1. [Example for usage in validation](#Example_for_usage_in_validation)
+            2. [Applicative of functions](#Applicative_of_functions)
         9. [Monad](#Monad)
             1. [Basic definition](#Basic_definition)
             2. [Explained as container](#Explained_as_container)
@@ -627,6 +628,39 @@ Applying this new knowledge we can finally create that validation function:
 mkPerson :: String -> Integer -> Either [PersonInvalid] Person
 mkPerson name age = liftA2 MkP (nameOkay name) (ageOkay age)
 ```
+
+#### Applicative of functions <a name="Applicative_of_Functions"/>
+
+``` haskell
+instance Applicative ((->) r) where
+    pure :: a -> (r -> a)
+    pure = const
+    (<*>) :: (r -> a -> b) -> (r -> a) -> (r -> b)
+    rab <*> ra = \r -> rab r (ra r)
+```
+
+Note: to enhance the function implementation with a type signature in the context of instances, you will need to activate the InstanceSigs extension.
+
+
+Now we know that we can use (&&) with two Bool values. But what about using (&&) with 2 functions that produce Bool values?
+E.g in the following function:
+
+``` haskell
+filter :: (a -> Bool) -> [a] -> [a]
+```
+
+It looks like we can only use one condition but with the function Applicative we can actualy use more:
+
+``` haskell
+f :: a -> Bool
+g :: a -> Bool
+l :: [a]
+
+filter ((&&) <$> f <*> g) l
+-- OR
+filter (liftA2 (&&) f g) l
+```
+
 
 ### Monad
 
