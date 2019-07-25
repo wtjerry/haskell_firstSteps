@@ -48,3 +48,39 @@ instance (Monad m) => Monad (MaybeT m) where
       case maybeA of
         Nothing -> return Nothing
         Just a -> (runMaybeT . f) a
+
+newtype EitherT e m a =
+  EitherT
+    { runEitherT :: m (Either e a)
+    }
+
+instance (Functor f) => Functor (EitherT e f) where
+  fmap :: (a -> b) -> EitherT e f a -> EitherT e f b
+  fmap f (EitherT a) = EitherT $ (fmap . fmap) f a
+
+instance (Applicative f) => Applicative (EitherT e f) where
+  pure :: a -> EitherT e f a
+  pure a = EitherT $ (pure . pure) a
+  (<*>) :: EitherT e f (a -> b) -> EitherT e f a -> EitherT e f b
+  (EitherT f) <*> (EitherT a) = EitherT $ (<*>) <$> f <*> a
+
+instance (Monad m) => Monad (EitherT e m) where
+  return :: a -> EitherT e m a
+  return = pure
+  (>>=) :: EitherT e m a -> (a -> EitherT e m b) -> EitherT e m b
+  (EitherT mea) >>= f =
+    EitherT $ do
+      eitherEA <- mea
+      case eitherEA of
+        (Left e) -> (return . Left) e
+        (Right a) -> (runEitherT . f) a
+
+swapEither :: Either e a -> Either a e
+swapEither (Left e) = Right e
+swapEither (Right a) = Left a
+
+swapEitherT :: (Functor f) => EitherT e f a -> EitherT a f e
+swapEitherT (EitherT fea) = EitherT $ swapEither <$> fea
+
+eitherT :: Monad m => (e -> m c) -> (a -> m c) -> EitherT e m a -> m c
+eitherT emc amc (EitherT meea) = meea >>= either emc amc
