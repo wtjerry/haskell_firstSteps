@@ -108,3 +108,33 @@ instance (Monad m) => Monad (ReaderT r m) where
   return = pure
   (>>=) :: ReaderT r m a -> (a -> ReaderT r m b) -> ReaderT r m b
   (ReaderT rma) >>= f = ReaderT $ \r -> rma r >>= \a -> (runReaderT . f) a r
+
+newtype StateT s m a =
+  StateT
+    { runStateT :: s -> m (a, s)
+    }
+
+instance (Functor f) => Functor (StateT s f) where
+  fmap :: (a -> b) -> StateT s f a -> StateT s f b
+  fmap f (StateT sfas) = StateT $ \s -> fmap tupF (sfas s)
+    where
+      tupF (a2, s2) = (f a2, s2)
+
+-- Note the Monad m constraint. Not possible without it: https://stackoverflow.com/questions/18673525/
+instance (Monad m) => Applicative (StateT s m) where
+  pure :: a -> StateT s m a
+  pure a = StateT $ \s -> pure (a, s)
+  (<*>) :: StateT s m (a -> b) -> StateT s m a -> StateT s m b
+  (StateT smabs) <*> (StateT smas) =
+    StateT $ \s1 -> do
+      (f, s2) <- smabs s1
+      (a, s3) <- smas s2
+      return (f a, s3)
+
+instance (Monad m) => Monad (StateT s m) where
+  return :: a -> StateT s m a
+  return = pure
+  (>>=) :: StateT s m a -> (a -> StateT s m b) -> StateT s m b
+  (StateT smas) >>= f = StateT $ \s1 -> do
+    (a, s2) <- smas s1
+    runStateT (f a) s2
