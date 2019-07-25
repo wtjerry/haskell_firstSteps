@@ -1,4 +1,5 @@
 {-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module MonadTransformerInstances where
 
@@ -84,3 +85,26 @@ swapEitherT (EitherT fea) = EitherT $ swapEither <$> fea
 
 eitherT :: Monad m => (e -> m c) -> (a -> m c) -> EitherT e m a -> m c
 eitherT emc amc (EitherT meea) = meea >>= either emc amc
+
+newtype ReaderT r m a =
+  ReaderT
+    { runReaderT :: r -> m a
+    }
+
+instance (Functor f) => Functor (ReaderT r f) where
+  fmap :: (a -> b) -> ReaderT r f a -> ReaderT r f b
+  fmap f (ReaderT rfa) = ReaderT $ (fmap . fmap) f rfa
+
+instance (Applicative f) => Applicative (ReaderT r f) where
+  pure :: a -> ReaderT r f a
+  pure a = ReaderT $ (const . pure) a
+  -- Alternatively using the Function Applicative:
+  --  (ReaderT f) <*> (ReaderT a) = ReaderT $ (<*>) <$> f <*> a
+  (<*>) :: ReaderT r f (a -> b) -> ReaderT r f a -> ReaderT r f b
+  (ReaderT f) <*> (ReaderT a) = ReaderT $ \r -> f r <*> a r
+
+instance (Monad m) => Monad (ReaderT r m) where
+  return :: a -> ReaderT r m a
+  return = pure
+  (>>=) :: ReaderT r m a -> (a -> ReaderT r m b) -> ReaderT r m b
+  (ReaderT rma) >>= f = ReaderT $ \r -> rma r >>= \a -> (runReaderT . f) a r
