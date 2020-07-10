@@ -1,0 +1,38 @@
+name:                codewars
+version:             0.1.0.0
+github:              "wtjerry/codewars"
+license:             BSD3
+author:              "wtjerry"
+maintainer:          "na@na.na"
+copyright:           "wtjerry"
+
+description:         Please see the README on GitHub at <https://github.com/wtjerry/haskell_firstSteps>
+
+dependencies:
+- base >=4.12 && <4.13
+
+library:
+  source-dirs: src
+
+executables:
+  codewars-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    - -Wall
+    dependencies:
+    - codewars
+
+tests:
+  codewars-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - codewars

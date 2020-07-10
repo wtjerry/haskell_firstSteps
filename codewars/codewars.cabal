@@ -1,0 +1,59 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 1ab68e4054c21b91b05f6a4c2f442e66fc71c2c4ac4ddbaf644e0c19ede0fb90
+
+name:           codewars
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/wtjerry/haskell_firstSteps>
+homepage:       https://github.com/wtjerry/codewars#readme
+bug-reports:    https://github.com/wtjerry/codewars/issues
+author:         wtjerry
+maintainer:     na@na.na
+copyright:      wtjerry
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/wtjerry/codewars
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_codewars
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.12 && <4.13
+  default-language: Haskell2010
+
+executable codewars-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_codewars
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -Wall
+  build-depends:
+      base >=4.12 && <4.13
+    , codewars
+  default-language: Haskell2010
+
+test-suite codewars-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_codewars
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.12 && <4.13
+    , codewars
+  default-language: Haskell2010
