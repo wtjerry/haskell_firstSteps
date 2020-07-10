@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1ab68e4054c21b91b05f6a4c2f442e66fc71c2c4ac4ddbaf644e0c19ede0fb90
+-- hash: 60b50baa425ca8a31354511df6c30104a75e1e2e516d29991e93b9c8745d4314
 
 name:           codewars
 version:        0.1.0.0
@@ -24,7 +24,37 @@ source-repository head
 
 library
   exposed-modules:
+      ArrayDiff
+      BonAppetit
+      BreakCamelCase
+      Cofunctor
+      CountingDuplicates
+      DescendingOrder
+      FindTheOddInt
+      FiveFundamentalMonads
+      GuessTheNumber
+      IPv4
+      Josephus
+      LastDigit
+      LensApprentice
       Lib
+      MaxSequence
+      MiddleCharacter
+      MiddlePermutation
+      MissingLetter
+      PileOfQubes
+      PriceDraw
+      RangeExtraction
+      RecurenceRelations
+      SameSquares
+      Setup
+      StringsMix
+      Tribonacci
+      TwoToOne
+      UniqueInOrder
+      ValidParantheses
+      WeightForWeight
+      YourOrderPlease
   other-modules:
       Paths_codewars
   hs-source-dirs:
