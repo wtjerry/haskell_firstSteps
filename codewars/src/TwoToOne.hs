@@ -1,4 +1,4 @@
-module Codewars.G964.Longest where
+module TwoToOne where
 
 import Data.List
 

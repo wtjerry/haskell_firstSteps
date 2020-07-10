@@ -1,3 +1,5 @@
+module GuessTheNumber where
+
 import Control.Monad.Reader
 
 greaterThan :: Int -> Reader Int Bool

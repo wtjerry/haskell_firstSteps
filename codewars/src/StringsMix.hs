@@ -1,10 +1,10 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 
-import Control.Applicative
+module StringsMix where
+
 import Data.Char
 import Data.Function
 import Data.List
-import Data.Monoid
 
 data WhichIsLonger = LeftLonger | RightLonger | Equal deriving (Eq)
 
@@ -20,6 +20,7 @@ data AOrFiller a = A a | Filler
 type WhichIsLongerOrFiller = AOrFiller WhichIsLongerWithSize
 
 
+mix :: String -> String -> String
 mix s1 s2 =
   zipWith takeBigger (prep s1) (prep s2)
     & filterByFiller

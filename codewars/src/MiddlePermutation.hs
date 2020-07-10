@@ -1,4 +1,4 @@
-module Lib where
+module MiddlePermutation where
 
 import Data.List
 

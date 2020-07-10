@@ -1,7 +1,6 @@
-module Codewars.Kata.FindOdd where
+module FindTheOddInt where
 
 import Data.List
 
 findOdd :: [Int] -> Int
-findOdd = head . head . filter (odd . length)  . group . sort
-
+findOdd = head . head . filter (odd . length) . group . sort

@@ -1,4 +1,4 @@
-module Codewars.Kata.BreakCamelCase where
+module BreakCamelCase where
 
 import Data.Char
 

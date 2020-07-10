@@ -9,7 +9,9 @@ copyright:           "wtjerry"
 description:         Please see the README on GitHub at <https://github.com/wtjerry/haskell_firstSteps>
 
 dependencies:
-- base >=4.12 && <4.13
+- base
+- mtl
+- containers
 
 library:
   source-dirs: src
@@ -36,3 +38,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - codewars
+    - hspec

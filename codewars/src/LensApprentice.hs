@@ -3,7 +3,7 @@
 {-# LANGUAGE TupleSections #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-module SimpleLens where
+module LensApprentice where
 
 -- Some functors we will need (implement them)
 

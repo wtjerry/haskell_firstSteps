@@ -1,4 +1,4 @@
-module Codewars.G964.WeightSort where
+module WeightForWeight where
 
 import Data.Char
 import Data.List
@@ -11,4 +11,5 @@ import Data.Ord
 
 -- after getting inspired by other solutions
 orderWeight = unwords . sortBy (comparing weight) . words
-  where weight = sum . map digitToInt
+  where
+    weight = sum . map digitToInt

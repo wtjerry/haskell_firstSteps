@@ -1,3 +1,5 @@
+module Eureka where
+
 import Data.Maybe (fromJust)
 import Data.List (genericTake)
 

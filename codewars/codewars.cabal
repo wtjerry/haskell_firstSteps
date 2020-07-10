@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 60b50baa425ca8a31354511df6c30104a75e1e2e516d29991e93b9c8745d4314
+-- hash: 49b488784b49595655ae7bce2267fd2a90e4d224cda96dd34b567d052fa35e85
 
 name:           codewars
 version:        0.1.0.0
@@ -30,10 +30,13 @@ library
       Cofunctor
       CountingDuplicates
       DescendingOrder
+      Eureka
       FindTheOddInt
       FiveFundamentalMonads
       GuessTheNumber
+      HowManyDigits
       IPv4
+      Isomorphism
       Josephus
       LastDigit
       LensApprentice
@@ -47,20 +50,22 @@ library
       RangeExtraction
       RecurenceRelations
       SameSquares
-      Setup
       StringsMix
       Tribonacci
       TwoToOne
       UniqueInOrder
       ValidParantheses
       WeightForWeight
+      WeirdIndex
       YourOrderPlease
   other-modules:
       Paths_codewars
   hs-source-dirs:
       src
   build-depends:
-      base >=4.12 && <4.13
+      base
+    , containers
+    , mtl
   default-language: Haskell2010
 
 executable codewars-exe
@@ -71,19 +76,25 @@ executable codewars-exe
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N -Wall
   build-depends:
-      base >=4.12 && <4.13
+      base
     , codewars
+    , containers
+    , mtl
   default-language: Haskell2010
 
 test-suite codewars-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      MeetingSpec
       Paths_codewars
   hs-source-dirs:
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.12 && <4.13
+      base
     , codewars
+    , containers
+    , hspec
+    , mtl
   default-language: Haskell2010
