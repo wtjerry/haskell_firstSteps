@@ -44,6 +44,7 @@ fillWithFillerValues = f fillerList
         EQ -> realH : (f fillerT realT)
         LT -> error "should never happen, as filler is a strict super set of real"
         GT -> (0, fillerH) : (f fillerT real)
+    f [] _ = error "should never happend, as filler is always non empty"
 
 isLowerAndAlpha :: Char -> Bool
 isLowerAndAlpha c = (isLower c) && (isAlpha c)

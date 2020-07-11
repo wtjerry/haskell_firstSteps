@@ -10,6 +10,7 @@ import Data.Ord
 --     where sumOfDigits = sum . map digitToInt
 
 -- after getting inspired by other solutions
+orderWeight :: String -> String
 orderWeight = unwords . sortBy (comparing weight) . words
   where
     weight = sum . map digitToInt

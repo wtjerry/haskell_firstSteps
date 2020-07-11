@@ -69,6 +69,7 @@ isoUnMaybe (mab, mba) =
 -- We cannot have
 -- isoUnEither :: ISO (Either a b) (Either c d) -> ISO a c -> ISO b d.
 -- Note that we have
+placeholder :: [()]
 placeholder = replicate 5000 ()
 isoEU :: ISO (Either [()] ()) (Either [()] Void)
 isoEU =
@@ -78,7 +79,7 @@ isoEU =
     \eitherListVoid -> case eitherListVoid of
       Left x -> case x of
         p | p == placeholder -> Right ()
-        otherwise -> Left x
+        _ -> Left x
       Right _ -> Right ()
   )
 

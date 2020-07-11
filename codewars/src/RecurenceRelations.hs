@@ -22,8 +22,8 @@ evaluateFunction f x = snd $ memoize x M.empty
             (Left v) -> (M.insert x v m, v)
             (Right (as, aggF)) ->
               let foldFunc (accM, accBs) a =
-                    let (m, v) = memoize a accM
-                     in (m, v : accBs)
+                    let (m', v) = memoize a accM
+                     in (m', v : accBs)
                in let (m', bs) = L.foldl foldFunc (m, []) as
                    in let v = aggF bs
                        in (M.insert n v m', v)

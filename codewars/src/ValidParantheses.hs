@@ -3,6 +3,7 @@ module ValidParantheses where
 validParentheses :: String -> Bool
 validParentheses s = helper s 0 0
 
+helper :: (Ord a, Num a) => String -> a -> a -> Bool
 helper [] o c
   | o == c = True
   | otherwise = False

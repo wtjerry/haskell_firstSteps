@@ -4,7 +4,7 @@
 module FiveFundamentalMonads where
 
 import Data.Monoid
-import Prelude hiding (Identity, Maybe (..), Monad, Reader, State, Writer)
+import Prelude hiding (Monad)
 
 class Monad m where
   return :: a -> m a
@@ -26,7 +26,7 @@ instance Monad (State s) where
 
 instance Monad (Reader s) where
   return :: a -> Reader s a
-  return = \a -> Reader $ \s -> a
+  return = \a -> Reader $ \_ -> a
   (>>=) :: Reader s a -> (a -> Reader s b) -> Reader s b
   (Reader r1) >>= f = Reader $ \s ->
     let r2 = (f . r1) s

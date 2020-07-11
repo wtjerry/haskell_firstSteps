@@ -11,11 +11,13 @@ rank st we n
   where
     names = wordsBy ',' st
 
+ranked :: [String] -> [Int] -> [(Int, String)]
 ranked names weights = sortBy numberThenName $ zip winningNumbers names
   where
     winningNumbers = zipWith winningNumber names weights
     numberThenName (wn1, n1) (wn2, n2) = mappend (compare wn2 wn1) (compare n1 n2)
 
+winningNumber :: String -> Int -> Int
 winningNumber name weight = weight * (length name + (sum . map ascii) name)
   where
     ascii c = (ord . toUpper) c -64

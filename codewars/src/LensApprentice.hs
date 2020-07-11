@@ -71,8 +71,10 @@ newtype TempC = TempC {getC :: Float} deriving (Eq, Show, Num)
 
 newtype TempF = TempF {getF :: Float} deriving (Eq, Show, Num)
 
+c_f :: TempC -> TempF
 c_f (TempC c) = TempF $ (9 / 5 * c) + 32
 
+f_c :: TempF -> TempC
 f_c (TempF f) = TempC $ 5 / 9 * (f - 32)
 
 -- the focus doesn't have to be *explicitly* in the source.

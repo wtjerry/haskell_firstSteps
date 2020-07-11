@@ -3,8 +3,10 @@ module Tribonacci where
 tribonacci :: Num a => (a, a, a) -> Int -> [a]
 tribonacci (a, b, c) n = take n $ trib a b c
 
+add3 :: Num a => a -> a -> a -> a
 add3 a b c = a + b + c
 
+trib :: Num a => a -> a -> a -> [a]
 trib a b c = a : b : c : zipWith3 add3 shifted0 shifted1 shifted2
   where
     shifted0 = trib a b c

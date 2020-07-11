@@ -8,9 +8,11 @@ greaterThan n = asks (> n)
 runGame :: Int -> Int
 runGame n = runReader (guess greaterThan) n
 
+guess :: Monad m => (Int -> m Bool) -> m Int
 guess gt = guess' 50 b gt
 
-b = [25, 13, 7, 4, 2, 1] :: [Int]
+b :: [Int]
+b = [25, 13, 7, 4, 2, 1]
 
 guess' :: Monad m => Int -> [Int] -> (Int -> m Bool) -> m Int
 guess' n [] gt = do

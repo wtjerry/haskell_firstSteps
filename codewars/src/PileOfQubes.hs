@@ -10,5 +10,5 @@ findNb mass =
     else (-1)
   where
     nToMass n = ((n * (n + 1)) `div` 2) ^ 2
-    massToN mass = integerSquareRoot (2 * integerSquareRoot mass)
+    massToN mass' = integerSquareRoot (2 * integerSquareRoot mass')
     integerSquareRoot = truncate . sqrt . fromIntegral

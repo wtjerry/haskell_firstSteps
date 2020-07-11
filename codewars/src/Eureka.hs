@@ -36,7 +36,11 @@ digits :: Integral n
     -> [n] -- ^ Either Nothing or the digits of the number in list form.
 digits base = reverse . digitsRev base
 
+digits10 :: Integer -> [Integer]
 digits10 = digits 10
 
+f :: Integer -> Bool
 f x = x == (sum $ zipWith (^) (digits10 x) [1..])
+
+solve :: Integer -> Integer -> [Integer]
 solve l h = filter f [l..h]

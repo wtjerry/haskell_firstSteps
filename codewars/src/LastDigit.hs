@@ -1,8 +1,8 @@
 module LastDigit where
 
 lastDigit :: Integer -> Integer -> Integer
-lastDigit base exponent
-  | exponent == 0 = 1
+lastDigit base expnt
+  | expnt == 0 = 1
   | lastDigitBase == 0 = 0
   | lastDigitBase == 1 = 1
   | lastDigitBase == 2 = magic 4
@@ -13,10 +13,12 @@ lastDigit base exponent
   | lastDigitBase == 7 = magic 4
   | lastDigitBase == 8 = magic 4
   | lastDigitBase == 9 = magic 2
+  | otherwise = error "should not happen as lastDigitBase is a single digit Integer"
   where
     lastDigitBase = base `mod` 10
-    magic x = lastDigitBase ^ (modOrM exponent x) `mod` 10
+    magic x = lastDigitBase ^ (modOrM expnt x) `mod` 10
 
+modOrM :: Integral p => p -> p -> p
 modOrM x m
   | x == 0 = 0
   | md == 0 = m

@@ -25,6 +25,7 @@ scanner (ranges, Just start, Just prev) x
   | x > (prev + 1) && start + 1 == prev = (Single prev : Single start : ranges, Just x, Just x)
   | x > (prev + 1) = (Range start prev : ranges, Just x, Just x)
   | otherwise = (ranges, Just start, Just x)
+scanner (_, _, _) _ = error "should not happend"
 
 extract :: B -> [Range]
 extract (ranges, Nothing, Nothing) = ranges
@@ -32,3 +33,4 @@ extract (ranges, Just start, Just prev)
   | start == prev = Single start : ranges
   | start + 1 == prev = Single prev : Single start : ranges
   | otherwise = Range start prev : ranges
+extract (_, _, _) = error "should not happend"
