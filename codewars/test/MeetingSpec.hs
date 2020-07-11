@@ -76,7 +76,8 @@ randomLengthShuffledList = do
 
 toInput :: [(String, String)] -> String
 toInput =
-  (foldr (\x acc -> acc ++ ";" ++ x) "")
+  concat
+    . intersperse ";"
     . (map (\(fn, ln) -> fn ++ ":" ++ ln))
 
 toExpectedOutput :: [(String, String)] -> String
