@@ -64,7 +64,8 @@ spec = do
             )
 
 shouldEqual :: String -> String -> Expectation
-shouldEqual input expected = (meeting input) `shouldBe` expected
+shouldEqual input expected =
+  (meeting input) `shouldBe` expected
 
 firstNameLastNameTuples :: Gen (String, String)
 firstNameLastNameTuples = (,) <$> (elements firstNames) <*> (elements lastNames)
