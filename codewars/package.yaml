@@ -10,8 +10,9 @@ description:         Please see the README on GitHub at <https://github.com/wtje
 
 dependencies:
 - base
-- mtl
 - containers
+- mtl
+- split
 
 library:
   source-dirs: src
@@ -48,3 +49,4 @@ tests:
     dependencies:
     - codewars
     - hspec
+    - QuickCheck
