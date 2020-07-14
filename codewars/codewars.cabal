@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: da82bbab932065af088eebb5bf8355fd0720354872a7dc533e38f7990e4db1ee
+-- hash: 004480b5ca7a2e4793d4d944f198f0681713529d7127b06cf47dec1679dfd380
 
 name:           codewars
 version:        0.1.0.0
@@ -29,6 +29,8 @@ library
       BreakCamelCase
       Cofunctor
       CountingDuplicates
+      DataTypesALaCarte
+      DataTypesALaCarteFork
       DescendingOrder
       Eureka
       FindTheOddInt
@@ -90,6 +92,8 @@ test-suite codewars-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      DataTypesALaCarteForkSpec
+      DataTypesALaCarteSpec
       MeetingExampleSpec
       MeetingSpec
       Paths_codewars
