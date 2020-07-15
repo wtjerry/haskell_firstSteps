@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 004480b5ca7a2e4793d4d944f198f0681713529d7127b06cf47dec1679dfd380
+-- hash: 39e2226cb4a3bda47b1a759b030b09ae3acc9d234c15edab78b3afce31ad521e
 
 name:           codewars
 version:        0.1.0.0
@@ -48,6 +48,7 @@ library
       MiddleCharacter
       MiddlePermutation
       MissingLetter
+      MostImperativeLanguageEver
       PileOfQubes
       PriceDraw
       RangeExtraction
@@ -96,6 +97,7 @@ test-suite codewars-test
       DataTypesALaCarteSpec
       MeetingExampleSpec
       MeetingSpec
+      MostImperativeLanguageEverSpec
       Paths_codewars
   hs-source-dirs:
       test
