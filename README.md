@@ -44,6 +44,7 @@ If you are looking to learn about / understand something in particular, try a ke
             6. [Type class](#Type_class)
                 1. [Custom type class](#Custom_type_class)
             7. [Newtype vs data vs type](#Newtype_vs_data_vs_type)
+            8. [Product vs Sum types](#Product_vs_Sum_types)
         2. [Currying](#Currying)
             1. [Why are function types that strange? Why not just split it into params and result?](#Why_are_function_types_that_strange?_Why_not_just_split_it_into_params_and_result?)
         3. [Pattern matching & guards](#Pattern_matching_&_guards)
@@ -61,9 +62,9 @@ If you are looking to learn about / understand something in particular, try a ke
             3. [Explained as composition enabler](#Explained_as_composition_enabler)
             4. [Explained in terms of Monoid](#Explained_in_terms_of_Monoid)
             5. [Differences to Applicative](#Differences_to_Applicative)
-    10. [FAQ](#FAQ)
-    3. [Contributing](#Contributing)
-    4. [License](#License)
+    3. [FAQ](#FAQ)
+2. [Contributing](#Contributing)
+3. [License](#License)
 
 
 ## Installation & Usage <a name="Installation_&_Usage"/>
@@ -351,6 +352,74 @@ newtype Pair a b = Pair a b
 Internally when a newtype is used GHC doesn't need to use indirection but can treat the Type Identity and the contained value a as the same.
 https://wiki.haskell.org/Newtype
 
+### Product vs Sum types
+Coming from a OO dominant language, product types might already be a familiar term. But what the heck are sum types you might ask.
+
+
+Lets take a step back and first explain product types:
+Classes from OO dominant languages go into the right direction but arent quite there yet. Some offerrecords which are quite on point. A product type is just a type consisting of a number of other types. No functions, just data.
+
+An example would be a Cooridnate type:
+```
+data Coordinate = Coordinate Int Int
+```
+
+Or in the probably more readabel record syntax:
+```
+data Coordinate = Coordinate { x :: Int, y :: Int }
+```
+
+
+So why the name "product"? Because the Type Coordinate can take Int times Int different values.
+So the number of different values a product type can take is the product of the types it consists of.
+
+Following the same pattern, a Sum type can take, the sum of the types it consists of, number of different values.
+We've previously already seen examples but lets see some more:
+
+```
+data Color = Green | Blue | Yellow
+```
+
+So while product types represent "a set of things grouped into a bigger thing", sum types represent "a thing that can be one of multiple different things"
+
+#### how do they help?
+Lets take a look back at how algebraic data types help us by helping the compiler keeping track of things.
+
+
+A product types groups types into a bigger thing. By doing so we tell the compiler hey that Int that represents an age and those two Strings that represent first and lastname, they go together. So if for example one of them is missing, something went wrong.
+With sum types we tell the compiler, look that Color over there can be either Green, Blue or Yellow. But nothing else so make sure of it. Also whenever i want to use Color please make sure i consider every possible value of it, because i cant know what it actually is.
+
+
+And how does the compiler do all that work?
+*Note*: this is probably not how Haskell or any other language do it exactly but it still helps in understanding how ADTs work.
+When you create a value of a product type it tags that value. And when you create a value of a sum type it also tags it.
+So why dont we extend this and let us tag values with even more information for the compiler. That way it can protect us even better of doing mistakes.
+
+
+Imagine we had to do some validation in our domain and also translate the potential errors to show to the user. We could do that with something like this:
+
+```
+data IbanValidationResult = TooLong
+                          | TooShort
+                          | InvalidCountry
+                          | InvalidChecksum
+
+validate :: String -> Either [IbanValidationResult] Iban
+
+translate :: Language -> IbanValidationResult -> String
+```
+
+But how would we be able to present an error message like "The entered Iban must be between 10 and 34 characters but was: 2"?
+
+Once again the power of composing smaller things into bigger things helps us out here.
+We can just change IbanValidationResult a bit to also include the actual length the faulty Iban was.
+
+```
+data IbanValidationResult = TooLong Int
+                          | TooShort Int
+                          | InvalidCountry String
+                          | InvalidChecksum
+```
 
 ### Currying
 
