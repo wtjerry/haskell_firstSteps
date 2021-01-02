@@ -119,16 +119,13 @@ For projects bigger than one file or more difficult tasks i currently use Intell
 1. install vi
 2. install your favourite plugin manager for vi
 3. install coc for vi (see my dotfiles repo .vimrc)
-4. install haskell-language-server
+4. install haskell-language-server (eg download release binaries and put into your path)
 5. glue coc and hls together with coc-settings.json
 
 ### new project
 1. stack new your-project-name
 2. stack build
 
-#### for haskell-language-server integration
-hls needs ghcide to work. When installing hls it uses ghcide from you path which is usually the same version for ghc as hls. If you later create a new project from scratch, you will likely use a higher ghc version. This leads to ghcide not being able to provide its ide functionality
-A workaround for this is to `stack build ghcide` in your new projectstack build ghcide` in your new project. This however requires to you put an explicit ref to ghc-check into your projects stack.yaml.
 
 ## Concept explanations <a name="Concept_explanations"/>
 
