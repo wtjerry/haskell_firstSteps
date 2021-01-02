@@ -1,0 +1,62 @@
+name:                hdl-to-json
+version:             0.1.0.0
+github:              "wtjerry/hdl-to-json"
+license:             BSD3
+author:              "wtjerry"
+maintainer:          "na@na.na"
+copyright:           "wtjerry"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            test-project
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/wtjerry/hdl-to-json#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- containers
+- free
+
+library:
+  source-dirs: src
+  ghc-options:
+  - -Wall
+  - -Werror
+  - -fno-warn-type-defaults
+
+executables:
+  hdl-to-json-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    - -Wall
+    - -Werror
+    - -fno-warn-type-defaults
+    dependencies:
+    - hdl-to-json
+
+tests:
+  hdl-to-json-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    - -Wall
+    - -Werror
+    - -fno-warn-type-defaults
+    dependencies:
+    - hdl-to-json
+    - hspec
+    - QuickCheck

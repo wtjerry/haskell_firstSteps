@@ -1,0 +1,74 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: ac28d62398548e9a0be3255cb345eccfdda547fafdd33005f63066edd25578e9
+
+name:           hdl-to-json
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/wtjerry/hdl-to-json#readme>
+homepage:       https://github.com/wtjerry/hdl-to-json#readme
+bug-reports:    https://github.com/wtjerry/hdl-to-json/issues
+author:         wtjerry
+maintainer:     na@na.na
+copyright:      wtjerry
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/wtjerry/hdl-to-json
+
+library
+  exposed-modules:
+      Andromeda.Hardware.Device
+      Andromeda.Hardware.HDL
+      Andromeda.Hardware.JsonInterpreter
+      Andromeda.Hardware.Types
+  other-modules:
+      Paths_hdl_to_json
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Werror -fno-warn-type-defaults
+  build-depends:
+      base >=4.7 && <5
+    , containers
+    , free
+  default-language: Haskell2010
+
+executable hdl-to-json-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_hdl_to_json
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -Wall -Werror -fno-warn-type-defaults
+  build-depends:
+      base >=4.7 && <5
+    , containers
+    , free
+    , hdl-to-json
+  default-language: Haskell2010
+
+test-suite hdl-to-json-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_hdl_to_json
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -Wall -Werror -fno-warn-type-defaults
+  build-depends:
+      QuickCheck
+    , base >=4.7 && <5
+    , containers
+    , free
+    , hdl-to-json
+    , hspec
+  default-language: Haskell2010
