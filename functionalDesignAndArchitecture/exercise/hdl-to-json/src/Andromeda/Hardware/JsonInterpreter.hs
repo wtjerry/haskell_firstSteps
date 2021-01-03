@@ -22,7 +22,8 @@ interpretComponent s (SensorDef (ComponentDef cc guid cm cn) ci p next) =
            ++ "\"guid\": \"" ++ guid ++ "\","
            ++ "\"model\": \"" ++ cm ++ "\","
            ++ "\"name\": \"" ++ cn ++ "\""
-           ++ "},"
+           ++ "}"
+           ++ addTrailingCommaIfRequired next
   in interpretJson s' next
 interpretComponent s (ControllerDef (ComponentDef cc guid cm cn) ci next) =
   let s' = s
@@ -33,5 +34,10 @@ interpretComponent s (ControllerDef (ComponentDef cc guid cm cn) ci next) =
            ++ "\"guid\": \"" ++ guid ++ "\","
            ++ "\"model\": \"" ++ cm ++ "\","
            ++ "\"name\": \"" ++ cn ++ "\""
-           ++ "},"
+           ++ "}"
+           ++ addTrailingCommaIfRequired next
   in interpretJson s' next
+
+addTrailingCommaIfRequired :: Hdl () -> String
+addTrailingCommaIfRequired (Pure _) = ""
+addTrailingCommaIfRequired (Free _) = ","
